@@ -1,3 +1,8 @@
 .idea/
 __pycache__/
 generated/
+
+cache/generated-images/*.png
+cache/generated-images/*.jpg
+cache/generated-images/*.jpeg
+cache/audio-recordings/*.wav

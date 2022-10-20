@@ -1,2 +1,4 @@
 stability-sdk==0.2.6
 ipython==8.5.0
+git+https://github.com/Lambdanaut/voicemsg.git
+
