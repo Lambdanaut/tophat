@@ -16,7 +16,7 @@ import settings
 
 class ImageGen(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def generate(self, width, height, steps):
+    def generate(self, prompt, width, height, steps):
         pass
 
     @staticmethod
@@ -45,7 +45,7 @@ class StabilityAPIGen(ImageGen):
             verbose=True,
         )
 
-    def generate(self, width, height, steps):
+    def generate(self, prompt, width, height, steps):
 
         if constants.DEBUG_MODE:
             width = constants.DEBUG_MODE_IMAGE_RESOLUTION[0]
@@ -54,7 +54,7 @@ class StabilityAPIGen(ImageGen):
 
         # the object returned is a python generator
         answers = self.stability_api.generate(
-            prompt="Obama on the moon on a unicorn juggling bassoons, 4k",
+            prompt=prompt,
             width=width,
             height=height,
             steps=steps,

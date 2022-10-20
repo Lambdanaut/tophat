@@ -4,8 +4,11 @@ real_path = os.path.realpath(__file__)
 dir_path = os.path.dirname(real_path)
 
 
-# API Key to use to connect to Stability API
+# API Key to use to connect to Stability API for image generation
 STABILITY_KEY = os.environ.get('STABILITY_KEY')
+
+# API Key to use to connect to DEEPGram for voice transcription
+DEEPGRAM_KEY = os.environ.get('DEEPGRAM_KEY')
 
 # Where to save generated images
 GENERATED_IMG_DIR = os.environ.get(
