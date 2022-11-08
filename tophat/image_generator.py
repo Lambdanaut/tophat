@@ -7,6 +7,7 @@ import warnings
 
 from IPython.display import display
 from PIL import Image
+import pygame
 import stability_sdk.client
 import stability_sdk.interfaces.gooseai.generation.generation_pb2 as generation
 
@@ -16,7 +17,7 @@ import settings
 
 class ImageGen(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def generate(self, prompt, width, height, steps):
+    def generate(self, prompt):
         pass
 
     @staticmethod
@@ -38,26 +39,51 @@ class ImageGen(metaclass=abc.ABCMeta):
 
 
 class StabilityAPIGen(ImageGen):
-    def __init__(self, api_key):
+    def __init__(
+            self,
+            api_key: str,
+            width: int,
+            height: int,
+            steps: int,
+            use_sdl_display: bool = False
+    ):
         # Connect to stability API
         self.stability_api = stability_sdk.client.StabilityInference(
             key=api_key,
             verbose=True,
         )
 
-    def generate(self, prompt, width, height, steps):
+        self.width = width
+        self.height = height
+        self.steps = steps
 
         if constants.DEBUG_MODE:
-            width = constants.DEBUG_MODE_IMAGE_RESOLUTION[0]
-            height = constants.DEBUG_MODE_IMAGE_RESOLUTION[1]
-            steps = constants.DEBUG_MODE_IMAGE_GENERATION_STEPS
+            self.width = constants.DEBUG_MODE_IMAGE_RESOLUTION[0]
+            self.height = constants.DEBUG_MODE_IMAGE_RESOLUTION[1]
+            self.steps = constants.DEBUG_MODE_IMAGE_GENERATION_STEPS
+
+        self.use_sdl_display = use_sdl_display
+        if use_sdl_display:
+            # Setup Pygame
+            pygame.init()
+            self.sdl_screen = pygame.display.set_mode(
+                (self.width, self.height),
+                # pygame.FULLSCREEN,
+            )
+            pygame.display.set_caption('Image Generation SDL Display')
+
+            self.sdl_screen.fill((0, 0, 0))
+            pygame.display.flip()
+
+    def generate(self, prompt):
+        save_path = None
 
         # the object returned is a python generator
         answers = self.stability_api.generate(
             prompt=prompt,
-            width=width,
-            height=height,
-            steps=steps,
+            width=self.width,
+            height=self.height,
+            steps=self.steps,
             # seed=567,  # if provided, specifying a random seed makes results deterministic
         )
 
@@ -74,3 +100,16 @@ class StabilityAPIGen(ImageGen):
                     img.save(save_path)
 
                     print(f"Saved new file to `{save_path}`")
+
+                    # Show the new image
+                    if self.use_sdl_display:
+
+                        pygame_img = pygame.image.load(save_path)
+                        self.sdl_screen.fill((0, 0, 0))
+                        self.sdl_screen.blit(pygame_img, (0, 0))
+
+                        pygame.display.flip()
+
+                    break
+
+        return save_path
