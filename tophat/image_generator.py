@@ -64,11 +64,16 @@ class StabilityAPIGen(ImageGen):
 
         self.use_sdl_display = use_sdl_display
         if use_sdl_display:
+
+            if settings.FULLSCREEN_MODE:
+                screen_mode = pygame.FULLSCREEN
+            else:
+                screen_mode = pygame.SHOWN
             # Setup Pygame
             pygame.init()
             self.sdl_screen = pygame.display.set_mode(
                 (self.width, self.height),
-                # pygame.FULLSCREEN,
+                screen_mode,
             )
             pygame.display.set_caption('Image Generation SDL Display')
 

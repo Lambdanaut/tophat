@@ -28,5 +28,9 @@ else:
     # Default Resolution
     IMAGE_RESOLUTION = 1088, 512
 
+# Whether to run in Fullscreen mode
+FULLSCREEN_MODE = os.environ.get('FULLSCREEN_MODE', False)
+
 # Steps to produce the sample. More steps=higher res, and potentially more $
 IMAGE_GENERATION_STEPS = os.environ.get('IMAGE_GENERATION_STEPS', 50)
+
