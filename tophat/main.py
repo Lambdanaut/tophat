@@ -29,7 +29,10 @@ def run():
         debug=True)
     vm.calibrate(show_demo_text=True)  # Calibrates the silence threshold
 
-    print("TopHat initialized")
+    print("TopHat Initialized")
+    print("==================")
+    print(f"Resolution: {settings.IMAGE_RESOLUTION[0]}"
+          f"x{settings.IMAGE_RESOLUTION[1]}")
 
     while True:
         print("Listening for voice message")
