@@ -2,5 +2,5 @@ deepgram-sdk==1.1.0
 ipython==8.5.0
 pillow==9.2.0
 pygame==2.1.2
-stability-sdk==0.2.6
+stability-sdk==0.3.1
 git+https://github.com/Lambdanaut/voicemsg.git
