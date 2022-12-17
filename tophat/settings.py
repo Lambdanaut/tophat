@@ -26,7 +26,7 @@ if IMAGE_RESOLUTION is not None:
     IMAGE_RESOLUTION = [int(value) for value in IMAGE_RESOLUTION.split('x')]
 else:
     # Default Resolution
-    IMAGE_RESOLUTION = 832, 520
+    IMAGE_RESOLUTION = 832, 512
 
 # Whether to run in Fullscreen mode
 FULLSCREEN_MODE = os.environ.get('FULLSCREEN_MODE', False)
