@@ -23,10 +23,10 @@ AUDIO_RECORDINGS_DIR = os.environ.get(
 # Image Resolution can be provided like `2160x1080` in the env variable
 IMAGE_RESOLUTION = os.environ.get('IMAGE_RESOLUTION')
 if IMAGE_RESOLUTION is not None:
-    IMAGE_RESOLUTION = IMAGE_RESOLUTION.split('x')
+    IMAGE_RESOLUTION = [int(value) for value in IMAGE_RESOLUTION.split('x')]
 else:
     # Default Resolution
-    IMAGE_RESOLUTION = 1088, 512
+    IMAGE_RESOLUTION = 832, 520
 
 # Whether to run in Fullscreen mode
 FULLSCREEN_MODE = os.environ.get('FULLSCREEN_MODE', False)
